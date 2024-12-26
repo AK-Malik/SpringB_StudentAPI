@@ -32,13 +32,15 @@ public class StudentInputController {
     @GetMapping("/getStudentNameByIdiInQueryParam")   // Or
     //  @RequestMapping(value = "/getStudentNameByIdiInQueryParam", method = RequestMethod.GET)  //replaced now by @GetMapping
 
-    public ResponseEntity<String> studentName(@RequestParam(value = "Id", required = true) Integer Id) //Or //what if String Id.
+    public ResponseEntity<?> studentName(@RequestParam(value = "Id", required = true) Integer Id) //Or //what if String Id.
     //  public ResponseEntity<String> studentName(@RequestParam(value = "Id", required = true) Integer Id, HttpServletRequest request) //replaced by above now
     {
         logger.info("This is an informational message."); //extra not needed just trial
         //  logger.warning("This is an informational message."); //logger.severe("This is an informational message.");
         System.out.println("Printing the name of student for {Id}: " + Id);
-        return new ResponseEntity<String>("Student Name for {Id} " + Id + " is: Fetched", HttpStatusCode.valueOf(200));
+       // return new ResponseEntity<String>("Student Name for {Id} " + Id + " is: Fetched", HttpStatusCode.valueOf(200));
+          return new ResponseEntity<>("Student Name for {Id} " + Id + " is: Fetched", HttpStatusCode.valueOf(200));
+
         //return new ResponseEntity("spring-querystring :: " + id + " - " + name, HttpStatus.OK);
     }
 
@@ -91,13 +93,13 @@ public class StudentInputController {
         return new ResponseEntity("spring-pathParam : " + id + " - " + name, HttpStatusCode.valueOf(200));
     }
 
-    //4. Run As : http://localhost:1099/myStudentApi/sendStudentIDAsPathvariableDelete?Id=123&Name=NeelG . No content will be displayed due to httpcode:204
+    //4. Run As : http://localhost:1099/myStudentApi/sendStudentIDAsPathVariableDelete?Id=123&Name=NeelG . No content will be displayed due to httpcode:204
     @DeleteMapping("/sendStudentIDAsPathVariableDelete")
     public ResponseEntity<String> putStudentIdNames(
             @RequestParam(value = "Id", required = true) Integer Id,
             @RequestParam(name = "Name") String Name) {
         System.out.println("Input spring-path-params are: " + Id + " , " + Name);
-        return new ResponseEntity<String>("Id: " + Id + " , Name:  " + Name + " , Value got Deleted", HttpStatus.valueOf(204));
+        return new ResponseEntity<String>("Id: " + Id + " , Name:  " + Name + " , Value got Deleted", HttpStatus.valueOf(200));//204
     }
 
 }
