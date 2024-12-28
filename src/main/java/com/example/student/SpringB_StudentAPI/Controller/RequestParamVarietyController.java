@@ -138,13 +138,13 @@ public class RequestParamVarietyController {
         return new ResponseEntity<>("Given names printed as: "+ DisplayNames,HttpStatus.OK);
     }
 
-    //Matrix Variable
+    //Matrix Variable  . use MAp
     //run as : http://localhost:1099/myStudentApi/matrixParam  or
     // run as : http://localhost:1099/myStudentApi/matrixParam/data;id=2;name=abc;id=3;name=bcd;name=anil;name=sk - Y Id once?
-    @GetMapping("/matrixParam/{data}")  //what if I dont use {data} and use {add} - not working.
-    public ResponseEntity<String> matrix(
-            @MatrixVariable(value="id",required = true,defaultValue = "123") Integer id,
-            @MatrixVariable(value="name", defaultValue = "NeelG") String name)
+    @GetMapping("/matrixParam/{add}")  //what if I dont use {data} and use {add} - not working.
+    public ResponseEntity<String> matrix(                        //use Map with key value pair
+            @MatrixVariable(value="id",required = true,defaultValue = "123") List<Integer> id,  //remove List
+            @MatrixVariable(value="name", defaultValue = "NeelG") List<String> name)
     {
         System.out.println("Printing matrix param: "+id +" : "+name);
         return new ResponseEntity<>("Matrix param entered are:"+id+": "+name, HttpStatusCode.valueOf(200));
@@ -155,13 +155,13 @@ public class RequestParamVarietyController {
      * Hit with JSON format of SuperModel object
      * If JSON body is not provided then exception will be thrown with 415(unsupported Media Type) as ResponseCode
      * If some fields are missing from JSON body and its a valid JSON, then the JSON will be absorbed but the missing fields will be assigned as null
-     */         // ??? value what if name
-    @PostMapping(value = "/SpringJSONTest", consumes= MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<InputModel> springJSON(ServletRequest request, @RequestBody InputModel InputModel) {
-           System.out.println("springJSONTest");
-        System.out.println("Object od inputmodel: "+ Object.class.getName());
+     */         // name and value both are acceptable. if u r using multi argument using annotation, then use keyname mandatory, for single argument, just mention end point without name/value, it will work ..
+    @PostMapping(value="/SpringJSONTest", consumes= MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<InputModel> springJSON(ServletRequest request, @RequestBody InputModel inputModel) {
+           System.out.println("springJSONTest: "+inputModel);
+
         // Exception test
-        return new ResponseEntity<InputModel>(InputModel,HttpStatus.OK);  //also works with: return new ResponseEntity(InputModel,HttpStatus.OK);
+           return new ResponseEntity<InputModel>(inputModel,HttpStatus.OK);  //also works with: return new ResponseEntity(InputModel,HttpStatus.OK);
     }
 
 }
