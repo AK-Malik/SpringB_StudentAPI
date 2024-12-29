@@ -1,11 +1,24 @@
 package com.example.student.SpringB_StudentAPI.Models;
 
-import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Date;
 public class InputModel {
     private Integer Id;
     private String Name;
-    private Date DOB;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date dob;
+                      //  private String DOB;
+                      public Date getDob() {
+                          return dob;
+                      }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
+
     private Address address;
 
     //private List<String> list;
@@ -14,7 +27,7 @@ public class InputModel {
 
     public Integer getId() {
         return Id;
-    }
+    } //use camel convention id
     public void setId(Integer id) {
         Id = id;
     }
@@ -26,12 +39,6 @@ public class InputModel {
         Name = name;
     }
 
-    public Date getDOB() {
-        return DOB;
-    }
-    public void setDOB(Date DOB) {
-        this.DOB = DOB;
-    }
 
     public Address getAddress() {
         return address;
@@ -41,11 +48,16 @@ public class InputModel {
     }
 
     //This is not needed but extra to print object. this is only useful for logging/printing
+
+
     @Override
     public String toString() {
-        //  return getClass().getName() + "@" + Integer.toHexString(hashCode());
-       //return "InputModel [  Id:= "+Id+" , Name= "+Name+" ]";
-        return "Anil";
+        return "InputModel{" +
+                "Id=: " + Id +
+                ", Name=: '" + Name + '\'' +
+                ", dob=: " + dob +
+                ", address=: " + address +
+                '}';
     }
 }
 // list, map, to make little more complex in it.

@@ -1,6 +1,7 @@
 package com.example.student.SpringB_StudentAPI.Controller;
 
 import com.example.student.SpringB_StudentAPI.Models.InputModel;
+import com.example.student.SpringB_StudentAPI.ModelsCreateDef.CreateModelDef;
 import jakarta.servlet.ServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -40,7 +41,7 @@ public class RequestParamVarietyController {
     @GetMapping("/request-param-with-same-name")
     public ResponseEntity<String> requestParamWithSameNames(@RequestParam String id, @RequestParam String name) {
         System.out.println("in requestParamWithSameNames");
-        return new ResponseEntity("requestParamWithSameNames: " + id + " - " + name,HttpStatus.OK);
+        return new ResponseEntity("requestParamWithSameNames: " + id + " - " + name, HttpStatus.OK);
     }
 
     /*
@@ -52,14 +53,15 @@ public class RequestParamVarietyController {
      * If name is not provided null is assigned to RequestParam variable name
      */
     @PostMapping("/request-param-mandatory-value")  //default takes true as seen in below
-    public ResponseEntity<String> requestParamMandatoryValue(@RequestParam String id, @RequestParam(required=false) String name) {
+    public ResponseEntity<String> requestParamMandatoryValue(@RequestParam String id, @RequestParam(required = false) String name) {
         System.out.println("in requestParamMandatoryValue");
-        return new ResponseEntity("requestParamMandatoryValue: " + id + " - " + name,HttpStatus.OK);
+        return new ResponseEntity("requestParamMandatoryValue: " + id + " - " + name, HttpStatus.OK);
     }
+
     @PostMapping("/request-param-mandatory-value1")
-    public ResponseEntity<String> requestParamMandatoryValue1(@RequestParam (required=true) String id, @RequestParam(required=false) String name) {
+    public ResponseEntity<String> requestParamMandatoryValue1(@RequestParam(required = true) String id, @RequestParam(required = false) String name) {
         System.out.println("in requestParamMandatoryValue");
-        return new ResponseEntity("requestParamMandatoryValue: " + id + " - " + name,HttpStatus.OK);
+        return new ResponseEntity("requestParamMandatoryValue: " + id + " - " + name, HttpStatus.OK);
     }
 
     /*
@@ -72,10 +74,11 @@ public class RequestParamVarietyController {
      * If name is not provided "Sumita" is assigned as default value to RequestParam variable name
      */
     @PostMapping("/request-param-default-value")
-    public ResponseEntity<String> requestParamDefaultValue(@RequestParam String id, @RequestParam(required=false, defaultValue ="Sumita") String name) {
+    public ResponseEntity<String> requestParamDefaultValue(@RequestParam String id, @RequestParam(required = false, defaultValue = "Sumita") String name) {
         System.out.println("in requestParamDefaultValue");
-        return new ResponseEntity("requestParamDefaultValue: " + id + " - " + name,HttpStatus.OK);
+        return new ResponseEntity("requestParamDefaultValue: " + id + " - " + name, HttpStatus.OK);
     }
+
     /*
      * Hit with : id = 1 name = Anil,
      * POST --> http://localhost:1099/myStudentApi/request-param-with-all-attributes
@@ -85,10 +88,11 @@ public class RequestParamVarietyController {
      * RequestParam variable differs, nameDummy for name
      * If name is not provided "BabyAnil" is assigned as default value to RequestParam variable name
      */
-    @PostMapping("/request-param-with-all-attributes")                                  //value or name ir id all are same as below. if you provide name =anilkumar, it will take this first rather default.
-    public ResponseEntity<String> requestParamWithAllAttributes(@RequestParam String id, @RequestParam(value="name", required=false, defaultValue ="babyAnil") String nameDummy) {
+    @PostMapping("/request-param-with-all-attributes")
+    //value or name ir id all are same as below. if you provide name =anilkumar, it will take this first rather default.
+    public ResponseEntity<String> requestParamWithAllAttributes(@RequestParam String id, @RequestParam(value = "name", required = false, defaultValue = "babyAnil") String nameDummy) {
         System.out.println("in requestParamWithAllAttributes");
-        return new ResponseEntity("requestParamWithAllAttributes: " + id + " - " + nameDummy,HttpStatus.OK);
+        return new ResponseEntity("requestParamWithAllAttributes: " + id + " - " + nameDummy, HttpStatus.OK);
     }
 
     /* List
@@ -98,17 +102,19 @@ public class RequestParamVarietyController {
      * If nameList is not provided then exception will be thrown with 400(Bad Request) as ResponseCode
      * Key name should be nameList
      */
-    @PostMapping("/request-param-multi-values-mandatory")  //params.  http://localhost:1099/myStudentApi/request-param-multi-values-mandatory?nameList=A&nameList=B
+    @PostMapping("/request-param-multi-values-mandatory")
+    //params.  http://localhost:1099/myStudentApi/request-param-multi-values-mandatory?nameList=A&nameList=B
     public ResponseEntity<String> requestParamMultiValuesMandatory(@RequestParam List<String> nameList) {
         System.out.println("in requestParamMultiValuesMandatory");
-        return new ResponseEntity("requestParamMultiValuesMandatory: " + nameList,HttpStatusCode.valueOf(200));
+        return new ResponseEntity("requestParamMultiValuesMandatory: " + nameList, HttpStatusCode.valueOf(200));
     }
+
     //Run As Get : http://localhost:1099/myStudentApi/multivariableusinglist?mlist=A&mlist=B&mlist=Ram&mlist=NeelG - see response [ "A", "B"]
     @GetMapping("/multivariableusinglist")
     public ResponseEntity<List> mylist(@RequestParam List<String> mlist)  //List<String> //List<List> - check answer
     {
         System.out.println("multivalue list here");
-        return new ResponseEntity<>(mlist,HttpStatus.OK);
+        return new ResponseEntity<>(mlist, HttpStatus.OK);
     }
 
 
@@ -122,20 +128,19 @@ public class RequestParamVarietyController {
      * Key name should be nameList
      */
     @PostMapping("/request-param-multi-values-default")
-    public ResponseEntity<String> requestParamMultiValuesDefault(@RequestParam(required=false,  defaultValue ="Anil, Kumar, Malik") List<String> nameList) {
+    public ResponseEntity<String> requestParamMultiValuesDefault(@RequestParam(required = false, defaultValue = "Anil, Kumar, Malik") List<String> nameList) {
         System.out.println("in requestParamMultiValuesDefault");
-        return new ResponseEntity("requestParamMultiValuesDefault: " + nameList,HttpStatus.OK);
+        return new ResponseEntity("requestParamMultiValuesDefault: " + nameList, HttpStatus.OK);
     }
 
     //AK extra practice
     //Run as : http://localhost:1099/myStudentApi/displayNamesDefinedbyAK?names=A&names=B&names=Ram&names=NeelG   or
     //Run as http://localhost:1099/myStudentApi/displayNamesDefinedbyAK?
     @PostMapping("/displayNamesDefinedbyAK")
-   //public ResponseEntity<String> myTestMethodWithRequestParam(@RequestParam (required = true, value = "names", defaultValue ="Anil, Kumar, Malik" ) String DisplayNames)
-     public ResponseEntity<String> myTestMethodWithRequestParam(@RequestParam (required = true, value = "names", defaultValue ="Anil, Kumar, Malik" ) List<String> DisplayNames)
-    {
+    //public ResponseEntity<String> myTestMethodWithRequestParam(@RequestParam (required = true, value = "names", defaultValue ="Anil, Kumar, Malik" ) String DisplayNames)
+    public ResponseEntity<String> myTestMethodWithRequestParam(@RequestParam(required = true, value = "names", defaultValue = "Anil, Kumar, Malik") List<String> DisplayNames) {
         System.out.println("Display myTestMethodWithRequestParam with Name String");
-        return new ResponseEntity<>("Given names printed as: "+ DisplayNames,HttpStatus.OK);
+        return new ResponseEntity<>("Given names printed as: " + DisplayNames, HttpStatus.OK);
     }
 
     //Matrix Variable  . use MAp
@@ -143,27 +148,48 @@ public class RequestParamVarietyController {
     // run as : http://localhost:1099/myStudentApi/matrixParam/data;id=2;name=abc;id=3;name=bcd;name=anil;name=sk - Y Id once?
     @GetMapping("/matrixParam/{add}")  //what if I dont use {data} and use {add} - not working.
     public ResponseEntity<String> matrix(                        //use Map with key value pair
-            @MatrixVariable(value="id",required = true,defaultValue = "123") List<Integer> id,  //remove List
-            @MatrixVariable(value="name", defaultValue = "NeelG") List<String> name)
-    {
-        System.out.println("Printing matrix param: "+id +" : "+name);
-        return new ResponseEntity<>("Matrix param entered are:"+id+": "+name, HttpStatusCode.valueOf(200));
+                                                                 @MatrixVariable(value = "id", required = true, defaultValue = "123") List<Integer> id,  //remove List
+                                                                 @MatrixVariable(value = "name", defaultValue = "NeelG") List<String> name) {
+        System.out.println("Printing matrix param: " + id + " : " + name);
+        return new ResponseEntity<>("Matrix param entered are:" + id + ": " + name, HttpStatusCode.valueOf(200));
     }
 
     /* JSON  thru Model
-     * POST --> http://localhost:1099/myStudentApi/SpringJSONTest
+     * POST --> http://localhost:1099/myStudentApi/SpringJSONTest   //based in input model (id, name only)
      * Hit with JSON format of SuperModel object
      * If JSON body is not provided then exception will be thrown with 415(unsupported Media Type) as ResponseCode
      * If some fields are missing from JSON body and its a valid JSON, then the JSON will be absorbed but the missing fields will be assigned as null
      */         // name and value both are acceptable. if u r using multi argument using annotation, then use keyname mandatory, for single argument, just mention end point without name/value, it will work ..
-    @PostMapping(value="/SpringJSONTest", consumes= MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/SpringJSONTest", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<InputModel> springJSON(ServletRequest request, @RequestBody InputModel inputModel) {
-           System.out.println("springJSONTest: "+inputModel);
+        System.out.println("springJSONTest: " + inputModel);
 
         // Exception test
-           return new ResponseEntity<InputModel>(inputModel,HttpStatus.OK);  //also works with: return new ResponseEntity(InputModel,HttpStatus.OK);
+        return new ResponseEntity<InputModel>(inputModel, HttpStatus.OK);  //also works with: return new ResponseEntity(InputModel,HttpStatus.OK);
     }
 
+
+    //from Input model using JSON format in request body
+    @PostMapping(value = "/fromInputModelThruJson", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE) //runs without as well
+    //input value will not be displayed in URL.
+    public ResponseEntity<String> springInputModelPojo( @RequestBody InputModel inputmodel) { //if you intercept Json you need @Requestbody annotation
+        System.out.println("fromInputModel pojo");
+        System.out.println("Json inputModelManual : " + inputmodel);
+        return new ResponseEntity(inputmodel, HttpStatus.OK);
+    }
+
+    //from Input model - internal but without @RequestBody
+    @PostMapping(value = "/fromInputModelThruJsoWithoutRequestBody", produces = MediaType.APPLICATION_JSON_VALUE) //runs without as well
+    //input value will not be displayed in URL.
+    public ResponseEntity<?> springInputModelPojoWithoutRequestBody( ) {
+        System.out.println("fromInputModel pojo without request body as input");
+        System.out.println("Json inputModel without request body as input- AK : " + CreateModelDef.createInputModel()); //just for logging
+        return new ResponseEntity<>(CreateModelDef.createInputModel() ,HttpStatus.OK);
+    }
+
+
+
 }
+
 
 //This Controller details all the features of @RequestParam, its different attributes(value, required, defaultValue)
